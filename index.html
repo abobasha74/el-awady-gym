@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El-Awady Gym</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- شاشة تسجيل الدخول -->
+  <section id="auth-section" class="container card">
+    <h1 class="title">تسجيل</h1>
+    <p class="subtitle">قم بتسجيل الدخول للوصول إلى لوحة الإدارة</p>
+    <form id="login-form" class="form">
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="example@email.com" required />
+
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="••••••••" required />
+
+      <button id="login-btn" type="submit" class="btn primary">تسجيل الدخول</button>
+      <div id="auth-error" class="error" aria-live="polite"></div>
+    </form>
+  </section>
+
+  <!-- لوحة الإدارة -->
+  <section id="dashboard" class="container hidden">
+    <header class="topbar">
+      <div class="tabs">
+        <button class="tab active" data-tab="add-member">إضافة مشترك جديد</button>
+        <button class="tab" data-tab="active-members">الأعضاء النشطون</button>
+        <button class="tab" data-tab="expired-members">الاشتراكات المنتهية</button>
+      </div>
+      <div class="spacer"></div>
+      <div class="search-box">
+        <input id="search-input" type="search" placeholder="بحث عن عضو .." />
+      </div>
+      <button id="signout-btn" class="btn">تسجيل الخروج</button>
+    </header>
+
+    <!-- تبويب: إضافة مشترك جديد -->
+    <div id="tab-add-member" class="tab-panel show">
+      <div class="card">
+        <h2>إضافة مشترك جديد</h2>
+        <form id="add-form" class="form grid">
+          <div>
+            <label for="member-name">الأسم</label>
+            <input id="member-name" type="text" required placeholder="أكتب اسم العضو هنا" />
+          </div>
+          <div>
+            <label for="start-date">تاريخ بداية</label>
+            <input id="start-date" type="date" required />
+          </div>
+          <div>
+            <label for="paid-amount">قيمة الاشتراك المدفوعة :</label>
+            <input id="paid-amount" type="number" min="0" step="1" required placeholder="0" />
+          </div>
+          <button id="add-btn" type="submit" class="btn primary">إضافة</button>
+          <div id="add-msg" class="success" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- تبويب: الأعضاء النشطون -->
+    <div id="tab-active-members" class="tab-panel">
+      <div class="card">
+        <h2>الأعضاء النشطون</h2>
+        <div class="table-wrap">
+          <table class="table" id="active-table">
+            <thead>
+              <tr>
+                <th>رقم العضو</th>
+                <th>الأسم</th>
+                <th>تاريخ بداية</th>
+                <th>تاريخ نهاية الاشتراك</th>
+                <th>قيمة الاشتراك</th>
+                <th>تعديل</th>
+                <th>مسح</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- بيانات ديناميكية -->
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <button class="btn" data-page="prev">السابق</button>
+          <span id="active-page">1</span>
+          <button class="btn" data-page="next">التالي</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- تبويب: الاشتراكات المنتهية -->
+    <div id="tab-expired-members" class="tab-panel">
+      <div class="card">
+        <h2>الاشتراكات المنتهية</h2>
+        <div class="table-wrap">
+          <table class="table" id="expired-table">
+            <thead>
+              <tr>
+                <th>رقم العضو</th>
+                <th>الأسم</th>
+                <th>تاريخ نهاية</th>
+                <th>قيمة الاشتراك</th>
+                <th>تعديل</th>
+                <th>مسح</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- بيانات ديناميكية -->
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <button class="btn" data-page="prev-exp">السابق</button>
+          <span id="expired-page">1</span>
+          <button class="btn" data-page="next-exp">التالي</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- نافذة تعديل عضو -->
+  <dialog id="edit-dialog">
+    <form method="dialog" id="edit-form" class="form">
+      <h3>تعديل عضو مشترك</h3>
+      <label for="edit-name">تعديل الأسم :</label>
+      <input id="edit-name" type="text" required />
+
+      <label for="edit-paid">قيمة الاشتراك المدفوع :</label>
+      <input id="edit-paid" type="number" min="0" step="1" required />
+
+      <label for="edit-next-pay">تاريخ دفع الاشتراك الجديد :</label>
+      <input id="edit-next-pay" type="date" required />
+
+      <div class="dialog-actions">
+        <button class="btn" value="cancel" type="button">إلغاء</button>
+        <button id="save-edit" class="btn primary" value="default" type="submit">حفظ التعديل</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Firebase SDKs (CDN) -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
